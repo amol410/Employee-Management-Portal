@@ -13,6 +13,7 @@ public interface PayrollRecordRepository extends JpaRepository<PayrollRecord, Lo
     Optional<PayrollRecord> findByEmployeeIdAndPayMonthAndPayYear(Long employeeId, int month, int year);
     Page<PayrollRecord> findByEmployeeId(Long employeeId, Pageable pageable);
     Page<PayrollRecord> findByPayMonthAndPayYear(int month, int year, Pageable pageable);
+    List<PayrollRecord> findAllByPayMonthAndPayYear(int month, int year);
     Page<PayrollRecord> findByStatus(PayrollStatus status, Pageable pageable);
     boolean existsByEmployeeIdAndPayMonthAndPayYear(Long employeeId, int month, int year);
 }

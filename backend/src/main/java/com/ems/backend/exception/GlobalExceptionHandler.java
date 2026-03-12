@@ -11,6 +11,7 @@ import com.ems.backend.exception.InsufficientLeaveBalanceException;
 import com.ems.backend.exception.LeaveRequestStateException;
 import com.ems.backend.exception.PayrollAlreadyExistsException;
 import com.ems.backend.exception.PayrollStateException;
+import com.ems.backend.exception.ReviewStateException;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -78,6 +79,12 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(PayrollStateException.class)
     public ResponseEntity<ErrorResponse> handlePayrollState(PayrollStateException ex) {
+        return ResponseEntity.status(HttpStatus.CONFLICT)
+                .body(new ErrorResponse(HttpStatus.CONFLICT.value(), ex.getMessage(), LocalDateTime.now()));
+    }
+
+    @ExceptionHandler(ReviewStateException.class)
+    public ResponseEntity<ErrorResponse> handleReviewState(ReviewStateException ex) {
         return ResponseEntity.status(HttpStatus.CONFLICT)
                 .body(new ErrorResponse(HttpStatus.CONFLICT.value(), ex.getMessage(), LocalDateTime.now()));
     }
