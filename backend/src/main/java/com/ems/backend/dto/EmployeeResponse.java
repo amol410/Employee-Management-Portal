@@ -16,6 +16,10 @@ public class EmployeeResponse {
     private LocalDate hireDate;
     private String position;
     private BigDecimal salary;
+    private Long departmentId;
+    private String departmentName;
+    private Long managerId;
+    private String managerName;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }

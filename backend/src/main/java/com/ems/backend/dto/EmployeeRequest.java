@@ -27,4 +27,8 @@ public class EmployeeRequest {
 
     @DecimalMin(value = "0.0", message = "Salary must be non-negative")
     private BigDecimal salary;
+
+    private Long departmentId;
+
+    private Long managerId;
 }

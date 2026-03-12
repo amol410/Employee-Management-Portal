@@ -7,6 +7,7 @@ import com.ems.backend.entity.Employee;
 import com.ems.backend.exception.DuplicateEmailException;
 import com.ems.backend.exception.ResourceNotFoundException;
 import com.ems.backend.mapper.EmployeeMapper;
+import com.ems.backend.repository.DepartmentRepository;
 import com.ems.backend.repository.EmployeeRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -28,6 +29,7 @@ import static org.mockito.Mockito.*;
 class EmployeeServiceTest {
 
     @Mock EmployeeRepository employeeRepository;
+    @Mock DepartmentRepository departmentRepository;
     @Mock EmployeeMapper employeeMapper;
     @InjectMocks EmployeeService employeeService;
 
@@ -64,7 +66,7 @@ class EmployeeServiceTest {
         when(employeeRepository.findAll(pageable)).thenReturn(page);
         when(employeeMapper.toResponse(employee)).thenReturn(response);
 
-        PagedResponse<EmployeeResponse> result = employeeService.getAllEmployees(null, pageable);
+        PagedResponse<EmployeeResponse> result = employeeService.getAllEmployees(null, null, pageable);
 
         assertThat(result.getContent()).hasSize(1);
         assertThat(result.getTotalElements()).isEqualTo(1);

@@ -23,6 +23,7 @@ public class EmployeeController {
     @GetMapping
     public ResponseEntity<PagedResponse<EmployeeResponse>> getAll(
             @RequestParam(required = false) String search,
+            @RequestParam(required = false) Long departmentId,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(defaultValue = "id") String sortBy,
@@ -33,7 +34,7 @@ public class EmployeeController {
                 : Sort.by(sortBy).ascending();
 
         return ResponseEntity.ok(
-                employeeService.getAllEmployees(search, PageRequest.of(page, size, sort))
+                employeeService.getAllEmployees(search, departmentId, PageRequest.of(page, size, sort))
         );
     }
 

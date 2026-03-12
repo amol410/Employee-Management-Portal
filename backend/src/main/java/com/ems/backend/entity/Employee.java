@@ -50,6 +50,18 @@ public class Employee {
     @Column(name = "salary", precision = 15, scale = 2)
     private BigDecimal salary;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "department_id")
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private Department department;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "manager_id")
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private Employee manager;
+
     @CreatedDate
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
