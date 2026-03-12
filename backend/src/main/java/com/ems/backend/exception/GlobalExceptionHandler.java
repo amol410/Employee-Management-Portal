@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import com.ems.backend.exception.InsufficientLeaveBalanceException;
 import com.ems.backend.exception.LeaveRequestStateException;
+import com.ems.backend.exception.PayrollAlreadyExistsException;
+import com.ems.backend.exception.PayrollStateException;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -64,6 +66,18 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(LeaveRequestStateException.class)
     public ResponseEntity<ErrorResponse> handleLeaveState(LeaveRequestStateException ex) {
+        return ResponseEntity.status(HttpStatus.CONFLICT)
+                .body(new ErrorResponse(HttpStatus.CONFLICT.value(), ex.getMessage(), LocalDateTime.now()));
+    }
+
+    @ExceptionHandler(PayrollAlreadyExistsException.class)
+    public ResponseEntity<ErrorResponse> handlePayrollExists(PayrollAlreadyExistsException ex) {
+        return ResponseEntity.status(HttpStatus.CONFLICT)
+                .body(new ErrorResponse(HttpStatus.CONFLICT.value(), ex.getMessage(), LocalDateTime.now()));
+    }
+
+    @ExceptionHandler(PayrollStateException.class)
+    public ResponseEntity<ErrorResponse> handlePayrollState(PayrollStateException ex) {
         return ResponseEntity.status(HttpStatus.CONFLICT)
                 .body(new ErrorResponse(HttpStatus.CONFLICT.value(), ex.getMessage(), LocalDateTime.now()));
     }
