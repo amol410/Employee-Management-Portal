@@ -7,6 +7,8 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import com.ems.backend.exception.InsufficientLeaveBalanceException;
+import com.ems.backend.exception.LeaveRequestStateException;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -50,6 +52,18 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(DepartmentHasEmployeesException.class)
     public ResponseEntity<ErrorResponse> handleDeptHasEmployees(DepartmentHasEmployeesException ex) {
+        return ResponseEntity.status(HttpStatus.CONFLICT)
+                .body(new ErrorResponse(HttpStatus.CONFLICT.value(), ex.getMessage(), LocalDateTime.now()));
+    }
+
+    @ExceptionHandler(InsufficientLeaveBalanceException.class)
+    public ResponseEntity<ErrorResponse> handleInsufficientBalance(InsufficientLeaveBalanceException ex) {
+        return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY)
+                .body(new ErrorResponse(422, ex.getMessage(), LocalDateTime.now()));
+    }
+
+    @ExceptionHandler(LeaveRequestStateException.class)
+    public ResponseEntity<ErrorResponse> handleLeaveState(LeaveRequestStateException ex) {
         return ResponseEntity.status(HttpStatus.CONFLICT)
                 .body(new ErrorResponse(HttpStatus.CONFLICT.value(), ex.getMessage(), LocalDateTime.now()));
     }
